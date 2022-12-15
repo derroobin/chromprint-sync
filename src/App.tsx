@@ -163,13 +163,15 @@ const generate = async () => {
 
   return (
     <div className="App">
-      <h1>1. play this audio on one device</h1>
+      <h1>synch devices with audio</h1>
+      <h2>1. play this audio on one device</h2>
       <audio src={long} ref={audioRef} controls/>
       
-      {import.meta.env.DEV ? <h1 style={{ color: "white" }}>{count === 0 ?" calculating...": count+"s"}</h1> : null}
+      {import.meta.env.DEV ? <h3 style={{ color: "white" }}>{count === 0 ?" calculating...": count+"s"}</h3> : null}
       {data && <div><textarea value={data} readOnly/></div>}
       {import.meta.env.DEV ? <button onClick={()=>generate()}>generate</button> : null}
-      <h1>2. listen to the audio using the second device</h1>
+      <h2>2. listen to the audio using the second device</h2>
+      <div>on the first click this might sync, because i dont get the permission to use audio first</div>
       <button onClick={()=>sync()}>record</button>
      
     
