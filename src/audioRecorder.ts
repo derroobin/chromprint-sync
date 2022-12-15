@@ -45,7 +45,6 @@ export const audioRecorder = async () => {
     const audioFile = await blobs.arrayBuffer();
     const audiobuffer = await audioContext.decodeAudioData(audioFile);
     const channeldata = audiobuffer.getChannelData(0);
-    console.log(channeldata)
 
     data = convertF32toI16(channeldata);
   } catch (e) {
