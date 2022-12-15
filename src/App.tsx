@@ -3,7 +3,8 @@ import long from "./assets/valkyries.mp3";
 import "./App.css";
 import { ChromaprintContext } from "./chromaprint/chromaprint_wasm";
 import { convertF32toI16, audioRecorder } from "./audioRecorder";
-
+import { useSpring, animated, config } from '@react-spring/web'
+ 
 
 const decodeAudio = async (src: string) => {
   const audioContext = new AudioContext();
@@ -123,6 +124,7 @@ function App() {
   const [data, setData] = useState("");
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  const [time, api] = useSpring(()=>({content: 0, config:config.stiff }))
 const generate = async () => {
     if (!audioRef.current) return;
     const duration = audioRef.current.duration;
@@ -133,6 +135,14 @@ const generate = async () => {
   
   }
 
+  useEffect(()=>{
+    if(!audioRef.current)
+    return
+
+    audioRef.current.addEventListener("timeupdate", (e) => {
+      api({content: audioRef.current?.currentTime})
+    })
+  }, [])
 
   const sync = async()=> {
     if(!audioRef.current) return
@@ -169,7 +179,7 @@ const generate = async () => {
       <h1>synch devices with audio</h1>
       <h2>1. play this audio on one device</h2>
       <audio src={long} ref={audioRef} controls/>
-      
+     <div><animated.span >{time.content.to(x=>x.toFixed(0)+"s")}</animated.span></div>
       {import.meta.env.DEV ? <h3 style={{ color: "white" }}>{count === 0 ?" calculating...": count+"s"}</h3> : null}
       {data && <div><textarea value={data} readOnly/></div>}
       {import.meta.env.DEV ? <button onClick={()=>generate()}>generate</button> : null}
