@@ -1,9 +1,9 @@
 export const audioRecorder = async () => {
   let data: Int16Array | undefined = undefined
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
 
-    const mediaRecorder = new MediaRecorder(stream, {mimeType: "audio/ogg"});
+    const mediaRecorder = new MediaRecorder(stream);
 
     const audioBlobs: Array<Blob> = [];
 

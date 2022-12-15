@@ -156,7 +156,7 @@ const generate = async () => {
 
     const time =best + (Date.now() - start)/1000
 
-    audioRef.current.fastSeek(time)
+    audioRef.current.currentTime = time
     audioRef.current.play()
 
   }
