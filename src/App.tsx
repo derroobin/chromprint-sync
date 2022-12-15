@@ -136,6 +136,9 @@ const generate = async () => {
 
   const sync = async()=> {
     if(!audioRef.current) return
+    
+    audioRef.current.play()
+    audioRef.current.pause()
 
     const duration = audioRef.current.duration
 
